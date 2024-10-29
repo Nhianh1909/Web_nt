@@ -5,21 +5,18 @@ session_start();
 <header class="header">
     <img class="h_logo" src="./assets/images/LOGO.png" alt="" />
     <img class="h_slogan" src="./assets/images/Slogan.png" alt="" />
-    <div class="lienhe">
-        <strong>Liên Hệ Với Chúng Tôi:</strong> <br />
-        <i class="fa-solid fa-phone"></i><span> : 1900-1009</span> <br />
-        <i class="fa-solid fa-envelope"></i><span> : tranbao091@gmail.com</span>
-    </div>
-    <div class="h_social">
-        <a href=""><i class="fa-brands fa-square-x-twitter"></i></a>
-        <a href=""><i class="fa-brands fa-facebook text-primary"></i></a>
-        <a href=""><i class="fa-brands fa-square-instagram"></i></a>
-        <a href=""><i class="fa-brands fa-youtube text-danger"></i></a>
-    </div>
+
+
     <div class="h_login">
         <span id="user-name"></span>
         <a href="./login.php?quanly=login" id="login-link" style="display: none;"><i class="fa-solid fa-user"></i> Tài Khoản</a>
         <button id="logout-button" style="display: none;">Đăng Xuất</button>
+        <div class="cart-icon">
+            <a href="index.php?quanly=donhang">
+                <i class="fa-solid fa-cart-shopping"></i> Đơn hàng
+            </a>
+            <span id="">0</span>
+        </div>
         <div class="cart-icon">
             <a href="index.php?quanly=giohang">
                 <i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng

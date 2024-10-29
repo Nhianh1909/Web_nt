@@ -18,6 +18,8 @@
         include("mains/chitietsanpham.php");
     } else if ($tam == 'giohang') {
         include("mains/giohang.php");
+    } else if ($tam == 'donhang') {
+        include("mains/donhang.php");
     } else {
         include("mains/danhmuc.php");
     }

@@ -1,10 +1,12 @@
 <?php
+session_start();
 include("./config.php");
 
 if (isset($_POST['signup'])) {
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = md5($_POST['password']); // Mã hóa mật khẩu bằng MD5
+  $address = $_POST['address'];
 
   // Kiểm tra tài khoản đã tồn tại chưa
   $check_user = "SELECT * FROM customer WHERE customer_fullname='$username' OR customer_email='$email'";
@@ -16,9 +18,16 @@ if (isset($_POST['signup'])) {
       echo "Tên người dùng hoặc email đã tồn tại!";
     } else {
       // Thêm người dùng mới vào database
-      $insert_user = "INSERT INTO customer (customer_fullname, customer_email, customer_password) VALUES ('$username', '$email', '$password')";
+      $insert_user = "INSERT INTO customer (customer_fullname, customer_email, customer_password, customer_address) VALUES ('$username', '$email', '$password', '$address')";
       if (mysqli_query($mysqli, $insert_user) === TRUE) {
         echo '<p style="color:green;">"Đăng ký thành công!"</p>';
+
+        // Kiểm tra nếu tài khoản là admin dựa trên hậu tố .admin
+        if (strpos($username, '.admin') !== false && substr($username, -6) === '.admin') {
+          echo "<script>window.location.href = './Admin/index.php';</script>"; // Chuyển hướng đến trang admin
+        } else {
+          echo "<script>window.location.href = 'index.php';</script>"; // Chuyển hướng đến trang chủ cho người dùng thường
+        }
       } else {
         echo "Lỗi: " . mysqli_error($mysqli); // Sử dụng mysqli_error để lấy thông báo lỗi
       }
@@ -50,9 +59,16 @@ if (isset($_POST['signin'])) {
       <script>
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('username', '$username');
-        window.location.href = 'index.php'; // Chuyển hướng đến trang chủ
-      </script>
       ";
+
+      // Kiểm tra nếu tài khoản là admin dựa trên hậu tố .admin
+      if (strpos($username, '.admin') !== false && substr($username, -6) === '.admin') {
+        echo "window.location.href = './Admin/index.php';"; // Chuyển hướng đến trang admin
+      } else {
+        echo "window.location.href = 'index.php';"; // Chuyển hướng đến trang chủ
+      }
+
+      echo "</script>";
       exit(); // Dừng script sau khi chuyển hướng
     } else {
       echo "Tên người dùng hoặc mật khẩu không chính xác!";
@@ -62,6 +78,7 @@ if (isset($_POST['signin'])) {
   }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -107,6 +124,10 @@ if (isset($_POST['signin'])) {
           <div class="input-field">
             <i class="fas fa-lock"></i>
             <input type="password" name="password" placeholder="Password" required />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="text" name="address" placeholder="Address" required />
           </div>
           <input type="submit" name="signup" value="Sign Up" class="btn solid" />
         </form>

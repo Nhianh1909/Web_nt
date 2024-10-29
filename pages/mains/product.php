@@ -114,7 +114,7 @@
                         <div class="col">
                             <div class="card" style="width: 18rem">
                                 <a href="./index.php?quanly=chitietsanpham&id=<?php echo $row['product_id'] ?>">
-                                    <img src="<?php echo $row['product_image']; ?>" class="card-img-top" alt="Sản phẩm" />
+                                    <img width="287px" height="200px" src="/lap-Trinh-Web-main/assets/images/<?php echo $row['product_image']; ?>" alt="Hình ảnh sản phẩm" />
                                     <div class="sp-note-Hot">HOT</div>
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $row['product_name']; ?></h5>

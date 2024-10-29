@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ hàng</title>
+    <title>Đơn hàng</title>
     <style>
         /* Một số CSS cơ bản cho giao diện giỏ hàng */
         .wrapper_cart {
@@ -113,13 +113,13 @@
 <body>
 
     <div class="wrapper_cart">
-        <h1>Giỏ hàng của bạn</h1>
+        <h1>Đơn hàng của bạn</h1>
         <div id="cart-items">
             <!-- Các sản phẩm trong giỏ hàng sẽ được hiển thị ở đây -->
         </div>
         <p>Tổng tiền: <span id="total-price">0</span> vnđ</p>
-        <button id="clear-cart">Xóa giỏ hàng</button>
-        <button style="float: right; background-color:green;" id="place-order">Đặt Hàng</button>
+        <button id="clear-cart">Xóa đơn hàng</button>
+        <button style="float: right; background-color:green;" id="place-order">Thanh toán</button>
     </div>
 
     <!-- Form đặt hàng -->
@@ -152,7 +152,7 @@
             let totalPrice = 0;
 
             if (cart.length === 0) {
-                cartItems.innerHTML = '<p>Giỏ hàng của bạn đang trống.</p>';
+                cartItems.innerHTML = '<p>Đơn hàng của bạn đang trống.</p>';
             } else {
                 cart.forEach((item, index) => {
                     const itemElement = document.createElement('div');
@@ -180,7 +180,7 @@
             document.getElementById('total-price').textContent = totalPrice.toLocaleString(); // Cập nhật tổng tiền
         }
 
-        // Hàm thêm sản phẩm vào giỏ hàng
+        // Hàm thêm sản phẩm 
         function addToCart(productId, productName, productPrice) {
             const existingProduct = cart.find(item => item.id === productId);
 

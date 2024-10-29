@@ -1,16 +1,40 @@
 <main class="main">
     <style>
         /* Một số CSS cơ bản cho giao diện chi tiết sản phẩm */
+        .wrapper_chitiet {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 0px 0px 25px 0px;
+        }
+
+        .hinhanh_sanpham img {
+            width: 100%;
+            /* Điều chỉnh kích thước ảnh sản phẩm */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            object-fit: cover;
+            /* Giữ tỷ lệ ảnh */
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
         .product-detail {
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
+            flex: 1;
+        }
+
+        .product-detail {
+            width: 100%;
+
+            padding: 129px;
             border: 1px solid #ddd;
             border-radius: 8px;
             background-color: #f9f9f9;
         }
 
-        .product-detail h1 {
+        .product-detail h3 {
             margin: 0 0 20px;
         }
 
@@ -24,8 +48,6 @@
             margin: 15px 0;
         }
 
-
-
         button {
             background-color: #4CAF50;
             color: white;
@@ -34,7 +56,8 @@
             cursor: pointer;
         }
     </style>
-    <!-- ======baner======== -->
+
+    <!-- ====== Banner ======== -->
     <div class="carousel slide main_banner" id="carouselDemo" data-bs-wrap="true" data-bs-ride="carousel" data-bs-interval="2000">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -68,9 +91,9 @@
         </div>
     </div>
 
-    <!-- =====Cam Ket======= -->
+    <!-- ===== Cam kết ======= -->
     <div class="cam-ket d-flex">
-        <div class="grid d-flex ">
+        <div class="grid d-flex">
             <div class="p-1 g-col-3 bg-info">
                 <img src="./assets/images/camket1.png" alt="">
                 <p><strong>Chính hãng</strong> <br> Bảo hành dài hạn</p>
@@ -79,13 +102,13 @@
                 <img src="./assets/images/camket2.png" alt="">
                 <p><strong>63 tỉnh thành</strong> <br> Giao hàng tận nơi</p>
             </div>
-            <div class="p-1 g-col-3 bg-success ">
+            <div class="p-1 g-col-3 bg-success">
                 <img src="./assets/images/camket3.png" alt="">
                 <p><strong>Tư vấn tận tình</strong> <br> Hỗ trợ 24/7</p>
             </div>
-            <div class="p-1 g-col-3 " style="background-color: orange;">
+            <div class="p-1 g-col-3" style="background-color: orange;">
                 <img src="./assets/images/camket4.png" alt="">
-                <p><strong>Chính sách hậu mãi</strong> <br> Bảo trì trọn đời</p>
+                <p><strong>Chính sách hậu mãi</strong> <br> Bảo trì trọn đời</p>
             </div>
         </div>
     </div>
@@ -95,17 +118,17 @@
     $sql_chitiet = "SELECT * FROM product_category, product WHERE product.category_id = product_category.category_id AND product.product_id='$_GET[id]' LIMIT 1";
     $query_chitiet = mysqli_query($mysqli, $sql_chitiet);
     while ($row_chitiet = mysqli_fetch_array($query_chitiet)) {
+
     ?>
         <div class="wrapper_chitiet">
             <div class="hinhanh_sanpham">
-                <img width="100%" src="<?php echo $row_chitiet['product_image']; ?>" alt="Hình ảnh sản phẩm">
+                <img src="/lap-Trinh-Web-main/assets/images/<?php echo $row_chitiet['product_image']; ?>" alt="Hình ảnh sản phẩm" />
             </div>
             <div class="product-detail">
                 <h3 id="product-name">Tên sản phẩm: <?php echo $row_chitiet['product_name']; ?></h3>
                 <p>Mã sản phẩm: <?php echo $row_chitiet['product_id']; ?></p>
                 <p id="product-price">Giá sản phẩm: <?php echo number_format($row_chitiet['product_price'], 0, ',', '.') . ' vnđ'; ?></p>
-                <p class="quantity">Số lượng sản phẩm còn: <?php echo $row_chitiet['product_quantity']; ?>
-                </p>
+                <p class="quantity">Số lượng sản phẩm còn: <?php echo $row_chitiet['product_quantity']; ?></p>
                 <p>Số lượng sản phẩm muốn chọn: <input style="width: 50px; text-align: center;" type="number" id="quantity" value="1" min="1"></p>
                 <p>Danh mục sản phẩm: <?php echo $row_chitiet['category_name']; ?></p>
                 <p><button class="add-to-cart" data-id="<?php echo $row_chitiet['product_id']; ?>" data-name="<?php echo $row_chitiet['product_name']; ?>" data-price="<?php echo $row_chitiet['product_price']; ?>">Thêm vào giỏ hàng</button></p>
@@ -121,7 +144,7 @@
         button.addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
             const productName = this.getAttribute('data-name');
-            const productPrice = parseFloat(this.getAttribute('data-price')); // Đảm bảo là số
+            const productPrice = parseFloat(this.getAttribute('data-price'));
 
             // Lấy giỏ hàng từ localStorage
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -133,13 +156,13 @@
             const existingProduct = cart.find(item => item.id === productId);
 
             if (existingProduct) {
-                existingProduct.quantity += quantity; // Cộng số lượng từ input
+                existingProduct.quantity += quantity;
             } else {
                 cart.push({
                     id: productId,
                     name: productName,
                     price: productPrice,
-                    quantity: quantity // Sử dụng số lượng từ input
+                    quantity: quantity
                 });
             }
 
